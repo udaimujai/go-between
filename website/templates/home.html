@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{%block title%}Home{%endblock title%}
+{%block script%}
+#left { width: 10rem; }
+#right { margin-left: 10rem; }
+{%endblock script%}
+
+{%block content%}
+<!-- <h1>
+    "This is the Home Page"
+</h1> -->
+
+
+    <div class="container">
+        <nav id="left">
+            <div>
+                <p class=bottom-three></p>
+            </div>
+            <div class="btn-group-justified btn-group-sm btn-group-vertical">
+                <button class="button" onclick="/delivery">Delivery & Return</button>
+                <button class="button">Inventory Management</button>
+                <button class="button">Order</button>
+                <button class="button">Package</button>
+                <button class="button">People</button>
+                <button class="button">Ticket Management</button>
+
+            </div>
+
+        </nav>
+        <div>
+            <p class=bottom-three>sd</p>
+        </div>
+        <main id="right">start</main>
+    </div>
+{%endblock%}
