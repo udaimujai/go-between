@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{%block content%}
+<div class="container">
+    <nav id="left">
+        <div>
+            <p class=bottom-three></p>
+        </div>
+    </nav>
+    <div>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+    </div>
+    <main id="right">
+        <form method="POST">
+            <div class="form-group">
+                <input type="id" class="form-control" id="id" name="id" placeholder="Employee ID" />
+            </div>
+            <div class="form-group">
+                <input type="Name" class="form-control" id="Name" name="Name" placeholder="Full Name" />
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email-Id" />
+            </div>
+            <div class="form-group">
+                <input type="dept" class="form-control" id="dept" name="dept" placeholder="Department" />
+            </div>
+            <div class="form-group">
+                <input type="package" class="form-control" id="package" name="package" placeholder="Package" />
+            </div>
+            <div class="form-group">
+                <input type="assets" class="form-control" id="assets" name="assets" placeholder="List of assets" />
+            </div>
+            <div class="form-group">
+                <input type="jdate" class="form-control" id="jdate" name="jdate" placeholder="Joining Date" />
+            </div>
+            <div class="form-group">
+                <input type="address" class="form-control" id="address" name="address" placeholder="Address" />
+            </div>
+            <div class="form-group">
+                <input type="swag" class="form-control" id="swag" name="swag" placeholder="Swags [Optional]" />
+            </div>
+            <button type="submit" class="button" name="action" value="add">On-Board </button>
+        </form>
+    </main>
+</div>
+{%endblock%}

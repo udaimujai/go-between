@@ -1,1 +1,23 @@
 {% extends "base.html" %}
+{% block title %}People{% endblock %}
+{%block content%}
+<div class="container">
+    <nav id="left">
+        <div>
+            <p class=bottom-three></p>
+        </div>
+        <form method="POST" <div class="btn-group-justified btn-group-sm btn-group-vertical">
+            <button type="submit" class="button" name="action" value="onboard">On-Board</button>
+            <button type="submit" class="button" name="action" value="Off-Board">Off-Board</button>
+            <button type="submit" class="button" name="action" value="Orders">Orders</button>
+        </form>
+    </nav>
+    <div>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+    </div>
+    <main id="right">
+    </main>
+</div>
+{%endblock%}

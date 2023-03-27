@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 {% block title %}delivery{% endblock %}
-<h1>
-    "This is the delivery Page"
-</h1>
+{%block content%}
+
+<div class="container">
+    <nav id="left">
+        <div>
+            <p class=bottom-three></p>
+        </div>
+        <form method="POST" <div class="btn-group-justified btn-group-sm btn-group-vertical">
+            <button type="submit" class="button" name="action" value="Delivery">Delivery </button>
+            <button type="submit" class="button" name="action" value="Return">Return</button>
+            <button type="submit" class="button" name="action" value="Orders">Order</button>
+        </form>
+    </nav>
+    <div>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+    </div>
+    <main id="right">
+        <input type="text" value="" class="field left" readonly>
+    </main>
+</div>
+{%endblock%}

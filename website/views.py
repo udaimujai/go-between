@@ -1,5 +1,10 @@
+
+from .models import Emp, Asset
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
+from . import db
+from flask import json
+
 views = Blueprint('views', __name__)
 
 
@@ -29,9 +34,12 @@ def ticket():
     return render_template("ticket.html", user=current_user)
 
 
-@views.route('/people')
+@views.route('/people', methods=['GET', 'POST'])
 @login_required
 def people():
+    if request.method == 'POST':
+        if request.form['action'] == 'onboard':
+            return redirect(url_for("views.omboard"))
     return render_template("people.html", user=current_user)
 
 
@@ -47,13 +55,104 @@ def order():
     return render_template("order.html", user=current_user)
 
 
-@views.route('/inventory')
+@views.route('/searinventory', methods=['GET', 'POST'])
 @login_required
+def searinventory():
+    search_list = request.args.getlist('search_list')
+    # print("searchInventory")
+    # for a in search_list:
+    #     # print(a[0])
+    #     print(a.asset_name)
+    #     print(a.asset_status)
+    # print("search_list***", search_list)
+    return render_template("searinventory.html", search_list=search_list, user=current_user)
+
+
+@views.route('/addinventory', methods=['GET', 'POST'])
+@login_required
+def addinventory():
+    if request.method == 'POST':
+        if request.form['action'] == 'add-inventory':
+            asset_id_ = request.form.get('asstid')
+            asset_name_ = request.form.get('asstName')
+            asset_status_ = request.form.get('asstStatus')
+            asset_detail_ = request.form.get('asstDetail')
+            asset_id__ = Asset.query.filter_by(asset_id=asset_id_).first()
+            if asset_id__:
+                flash("asset id already available", catagory='error')
+            else:
+                new_asset = Asset(asset_id=asset_id_,
+                                  asset_name=asset_name_,
+                                  asset_status=asset_status_,
+                                  asset_detail=asset_detail_
+                                  )
+                db.session.add(new_asset)
+                db.session.commit()
+                flash("added successfully", category='success')
+                return redirect(url_for("views.addinventory", user=current_user))
+    return render_template("addInventory.html", user=current_user)
+
+
+@ views.route('/inventory', methods=['GET', 'POST'])
+@ login_required
 def inventory():
+    if request.method == 'POST':
+        if request.form['action'] == 'search':
+            asst_id = request.form.get('id')
+            asst_name = request.form.get('asstName')
+            asst_status = request.form.get('asstStatus')
+            asst_detail = request.form.get('asstDetail')
+            # ass_result = Asset.query.filter_by(asset_id=asst_id).filter_by(asset_name=asst_name).filter_by(
+            # asset_status=asst_status).filter_by(asset_detail=asst_detail).all()
+            ass_results = Asset.query.filter_by(asset_id=asst_id)
+            # ass_results = Asset.query.all()
+            for ass_result in ass_results:
+                print(ass_result.asset_id)
+                print(ass_result.asset_name)
+                print(ass_result.asset_status)
+            print("ass_results****", ass_results)
+            return redirect(url_for("views.searinventory", search_list=ass_results))
+        if request.form['action'] == 'Add-Asset':
+            return redirect(url_for("views.addinventory", user=current_user))
     return render_template("inventory.html", user=current_user)
 
 
-@views.route('/delivery')
-@login_required
+@ views.route('/delivery')
+@ login_required
 def delivery():
     return render_template("delivery.html", user=current_user)
+
+
+@ views.route('/omboard', methods=['GET', 'POST'])
+@ login_required
+def omboard():
+    if request.method == 'POST':
+        if request.form['action'] == 'add':
+            id = request.form.get('id')
+            name = request.form.get('Name')
+            email = request.form.get('email')
+            dept = request.form.get('dept')
+            package = request.form.get('package')
+            asset = request.form.get('asset')
+            jdate = request.form.get('jdate')
+            address = request.form.get('address')
+            swag = request.form.get('swag')
+            emp = Emp.query.filter_by(email=email).first()
+            if emp:
+                flash('Email already exists.', category='success')
+            else:
+                new_emp = Emp(id=id,
+                              email=email,
+                              first_name=name,
+                              department=dept,
+                              package=package,
+                              asset_list=asset,
+                              join_date=jdate,
+                              address=address,
+                              swags=swag
+                              )
+                db.session.add(new_emp)
+                db.session.commit()
+                flash("account created successfully", category='success')
+                return redirect(url_for("views.omboard"))
+    return render_template("onboard.html", user=current_user)
