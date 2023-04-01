@@ -8,7 +8,7 @@
         <form method="POST" <div class="btn-group-justified btn-group-sm btn-group-vertical">
             <button type="submit" class="button" name="action" value="Add-Asset">Add-Asset</button>
             <button type="submit" class="button" name="action" value="Delete-Asset">Delete-Asset</button>
-            <button type="submit" class="button" name="action" value="Search">Search</button>
+            <button type="submit" class="button" name="action" value="Search-All">Search-All</button>
         </form>
     </nav>
     <div>
@@ -22,18 +22,43 @@
                 <input type="id" class="form-control" id="id" name="id" placeholder="Asset Id" />
             </div>
             <div class="form-group">
-                <input type="asstName" class="form-control" id="asstName" name="asstName" placeholder="asset name" />
+                <input type="asstName" class="form-control" id="asstName" name="asstName" placeholder="Asset Name" />
             </div>
             <div class="form-group">
                 <input type="asstStatus" class="form-control" id="asstStatus" name="asstStatus"
-                    placeholder="asset_status" />
+                    placeholder="Asset Status" />
             </div>
             <div class="form-group">
                 <input type="asstDetail" class="form-control" id="asstDetail" name="asstDetail"
-                    placeholder="asset_detail" />
+                    placeholder="Asset Detail" />
             </div>
-            <button type="submit" class="button" name="action" value="search">search</button>
+            <button type="submit" class="button" name="action" value="search">Search</button>
         </form>
+        <table BORDER="5" WIDTH="100%" CELLPADDING="4" CELLSPACING="3">
+            <thead>
+                <tr>
+                    <th>Asset ID </th>
+                    <th>Asset Name </th>
+                    <th>Asset Status </th>
+                    <th>Asset Details </th>
+                </tr>
+            </thead>
+            {% if search_list is not none %}
+            {% for b in search_list %}
+            <tr>
+                <td>{{ b.asset_id }}</td>
+                <td>{{ b.asset_name }}</td>
+                <td>{{ b.asset_status }}</td>
+                <td>{{ b.asset_detail }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% else %}
+        <tr>
+            <td>No Results</td>
+        </tr>
+        {% endif %}
     </main>
 </div>
 {%endblock%}

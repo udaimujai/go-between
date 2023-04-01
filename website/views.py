@@ -3,7 +3,7 @@ from .models import Emp, Asset
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from . import db
-from flask import json
+from sqlalchemy import and_, or_
 
 views = Blueprint('views', __name__)
 
@@ -73,6 +73,42 @@ def searinventory():
 def addinventory():
     if request.method == 'POST':
         if request.form['action'] == 'add-inventory':
+
+            return redirect(url_for("views.addinventory", user=current_user))
+    return render_template("addInventory.html", user=current_user)
+
+
+@ views.route('/inventory', methods=['GET', 'POST'])
+@ login_required
+def inventory():
+    if request.method == 'POST':
+        if request.form['action'] == 'search':
+            asst_id = request.form.get('id')
+            asst_name = request.form.get('asstName')
+            asst_status = request.form.get('asstStatus')
+            asst_detail = request.form.get('asstDetail')
+            # ass_results = Asset.query.filter_by(asset_id=asst_id)
+            # ass_results = Asset.query.filter(
+            #     Asset.asset_id == asst_id, Asset.asset_name == asst_name).all()
+            ass_results = db.session.query(Asset).filter(or_(Asset.asset_id.like(
+                asst_id), Asset.asset_name.like(asst_name)))
+            for ass_result in ass_results:
+                print(ass_result.asset_id)
+                print(ass_result.asset_name)
+                print(ass_result.asset_status)
+            print("ass_results****", ass_results)
+            return render_template("inventory.html", search_list=ass_results, user=current_user)
+        if request.form['action'] == 'Search-All':
+            asst_id = request.form.get('id')
+            asst_name = request.form.get('asstName')
+            asst_status = request.form.get('asstStatus')
+            asst_detail = request.form.get('asstDetail')
+            # ass_result = Asset.query.filter_by(asset_id=asst_id).filter_by(asset_name=asst_name).filter_by(
+            #     asset_status=asst_status).filter_by(asset_detail=asst_detail).all()
+            ass_results = Asset.query.all()
+
+            return render_template("inventory.html", search_list=ass_results, user=current_user)
+        if request.form['action'] == 'Add-Asset':
             asset_id_ = request.form.get('asstid')
             asset_name_ = request.form.get('asstName')
             asset_status_ = request.form.get('asstStatus')
@@ -89,31 +125,7 @@ def addinventory():
                 db.session.add(new_asset)
                 db.session.commit()
                 flash("added successfully", category='success')
-                return redirect(url_for("views.addinventory", user=current_user))
-    return render_template("addInventory.html", user=current_user)
-
-
-@ views.route('/inventory', methods=['GET', 'POST'])
-@ login_required
-def inventory():
-    if request.method == 'POST':
-        if request.form['action'] == 'search':
-            asst_id = request.form.get('id')
-            asst_name = request.form.get('asstName')
-            asst_status = request.form.get('asstStatus')
-            asst_detail = request.form.get('asstDetail')
-            # ass_result = Asset.query.filter_by(asset_id=asst_id).filter_by(asset_name=asst_name).filter_by(
-            # asset_status=asst_status).filter_by(asset_detail=asst_detail).all()
-            ass_results = Asset.query.filter_by(asset_id=asst_id)
-            # ass_results = Asset.query.all()
-            for ass_result in ass_results:
-                print(ass_result.asset_id)
-                print(ass_result.asset_name)
-                print(ass_result.asset_status)
-            print("ass_results****", ass_results)
-            return redirect(url_for("views.searinventory", search_list=ass_results))
-        if request.form['action'] == 'Add-Asset':
-            return redirect(url_for("views.addinventory", user=current_user))
+            return render_template("inventory.html", user=current_user)
     return render_template("inventory.html", user=current_user)
 
 
