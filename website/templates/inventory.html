@@ -1,16 +1,6 @@
 {% extends "base.html" %}
 {%block content%}
 <div class="container">
-    <nav id="left">
-        <div>
-            <p class=bottom-three></p>
-        </div>
-        <form method="POST" <div class="btn-group-justified btn-group-sm btn-group-vertical">
-            <button type="submit" class="button" name="action" value="Add-Asset">Add-Asset</button>
-            <button type="submit" class="button" name="action" value="Delete-Asset">Delete-Asset</button>
-            <button type="submit" class="button" name="action" value="Search-All">Search-All</button>
-        </form>
-    </nav>
     <div>
         <p class=bottom-three></p>
         <p class=bottom-three></p>
@@ -32,15 +22,37 @@
                 <input type="asstDetail" class="form-control" id="asstDetail" name="asstDetail"
                     placeholder="Asset Detail" />
             </div>
+            <div class="form-group">
+                <input type="EmpID" class="form-control" id="EmpID" name="EmpID" placeholder="Employee ID" />
+            </div>
+            <div class="form-group">
+                <input type="EmpName" class="form-control" id="EmpName" name="EmpName" placeholder="Employee Name" />
+            </div>
             <button type="submit" class="button" name="action" value="search">Search</button>
+            <button type="submit" class="button" name="action" value="Add-Asset">Add-Asset</button>
+            <button type="submit" class="button" name="action" value="Delete-Asset">Delete-Asset</button>
+            <button type="submit" class="button" name="action" value="Search-All">Search-All</button>
+            <button type="submit" class="button" name="action" value="Search-MA">Search-Mapped-Asset</button>
+            <button type="submit" class="button" name="action" value="MA">Map-Asset</button>
+
+
         </form>
         <table BORDER="5" WIDTH="100%" CELLPADDING="4" CELLSPACING="3">
+            {% if Emp_name is not none %}
+            <thead>
+                <tr>
+                    <th>Employee Name </th>
+                    <td>{{ Emp_name }}</td>
+                </tr>
+            </thead>
+            {% endif %}
             <thead>
                 <tr>
                     <th>Asset ID </th>
                     <th>Asset Name </th>
                     <th>Asset Status </th>
                     <th>Asset Details </th>
+
                 </tr>
             </thead>
             {% if search_list is not none %}

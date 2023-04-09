@@ -2,8 +2,19 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-db = SQLAlchemy()
+from flask_migrate import Migrate
+from sqlalchemy import MetaData
+
+naming_convention = {
+    "ix": 'ix_%(column_0_label)s',
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(column_0_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s"
+}
+db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 DB_NAME = "database.db"
+migrate = Migrate()
 
 
 def create_app():
@@ -11,7 +22,8 @@ def create_app():
     app.   config['SECRET_KEY'] = 'ubyxgghjqmlc ddrkmqslaxtgfd'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
-
+    # migrate = Migrate(app, db, render_as_batch=True)
+    migrate.init_app(app, db)
     from .views import views
     from .auth import auth
     app.register_blueprint(views, url_prefix='/')

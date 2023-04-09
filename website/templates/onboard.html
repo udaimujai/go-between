@@ -1,16 +1,6 @@
 {% extends "base.html" %}
 {%block content%}
 <div class="container">
-    <nav id="left">
-        <div>
-            <p class=bottom-three></p>
-        </div>
-    </nav>
-    <div>
-        <p class=bottom-three></p>
-        <p class=bottom-three></p>
-        <p class=bottom-three></p>
-    </div>
     <main id="right">
         <form method="POST">
             <div class="form-group">
@@ -40,8 +30,42 @@
             <div class="form-group">
                 <input type="swag" class="form-control" id="swag" name="swag" placeholder="Swags [Optional]" />
             </div>
-            <button type="submit" class="button" name="action" value="add">On-Board </button>
+            <button type="submit" class="button" name="action" value="search">Search</button>
+            <button type="submit" class="button" name="action" value="add">Add</button>
+            <button type="submit" class="button" name="action" value="delete">Delete</button>
+            <button type="submit" class="button" name="action" value="search-all">Search-All</button>
         </form>
+        <table BORDER="5" WIDTH="100%" CELLPADDING="4" CELLSPACING="3">
+            <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> Name </th>
+                    <th> First Name </th>
+                    <th>Last Name</th>
+                    <th>Department</th>
+                    <th>Join Date</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            {% if search_list is not none %}
+            {% for b in search_list %}
+            <tr>
+                <td>{{ b.id }}</td>
+                <td>{{ b.email }}</td>
+                <td>{{ b.first_name }}</td>
+                <td>{{ b.last_name }}</td>
+                <td>{{ b.department }}</td>
+                <td>{{ b.join_date }}</td>
+                <td>{{ b.address }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% else %}
+        <tr>
+            <td>No Results</td>
+        </tr>
+        {% endif %}
     </main>
 </div>
 {%endblock%}
