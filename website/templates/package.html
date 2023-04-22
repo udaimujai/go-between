@@ -1,1 +1,59 @@
 {% extends "base.html" %}
+{%block content%}
+<div class="container">
+    <div>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+        <p class=bottom-three></p>
+    </div>
+    <main id="right">
+        <form method="POST">
+            <div class="form-group">
+                <input type="id" class="form-control" id="id" name="id" placeholder="Package Id" />
+            </div>
+            <div class="form-group">
+                <input type="id" class="form-control" id="id" name="asst_id" placeholder="Asset Id" />
+            </div>
+            <button type="submit" class="button" name="action" value="search">Search</button>
+            <button type="submit" class="button" name="action" value="Delete-Asset">Delete-Package</button>
+            <button type="submit" class="button" name="action" value="Search-All">Search-All-Packages</button>
+            <button type="submit" class="button" name="action" value="Search-MA">Search-Mapped-Asset</button>
+            <button type="submit" class="button" name="action" value="MA">Map-Asset</button>
+
+        </form>
+        <table BORDER="5" WIDTH="100%" CELLPADDING="4" CELLSPACING="3">
+            {% if pkg_name is not none %}
+            <thead>
+                <tr>
+                    <th style="text-align: center">Package Name </th>
+                    <td style="text-align: center">{{ pkg_name }}</td>
+                </tr>
+            </thead>
+            {% endif %}
+            <thead>
+                <tr>
+                    <th style="text-align: center">Asset ID </th>
+                    <th style="text-align: center">Asset Name </th>
+                    <th style="text-align: center">Asset Status </th>
+                    <th style="text-align: center">Asset Details </th>
+                </tr>
+            </thead>
+            {% if search_list is not none %}
+            {% for b in search_list %}
+            <tr>
+                <td style="text-align: center">{{ b.asset_id }}</td>
+                <td style="text-align: center">{{ b.asset_name }}</td>
+                <td style="text-align: center">{{ b.asset_status }}</td>
+                <td style="text-align: center">{{ b.asset_detail }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% else %}
+        <tr>
+            <td style="text-align: center">No Results</td>
+        </tr>
+        {% endif %}
+    </main>
+</div>
+{%endblock%}

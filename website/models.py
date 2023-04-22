@@ -5,6 +5,21 @@ from sqlalchemy import ForeignKey, Column, Integer, String
 from sqlalchemy.orm import relationship
 
 
+class Package(db.Model):
+    __tablename__ = 'package'
+    pkg_id = db.Column(db.String(150), primary_key=True)
+    pkg_assets = db.relationship(
+        'Asset', secondary='pkg_devices', backref='packages')
+
+
+class PkgDevices(db.Model):
+    __tablename__ = 'pkg_devices'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    pkg_id = db.Column(db.Integer, db.ForeignKey(
+        "package.pkg_id"), nullable=False)
+    asset_id = db.Column(db.Integer, db.ForeignKey(
+        "asset.asset_id"), nullable=False)
+
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
@@ -20,11 +35,6 @@ class User(db.Model, UserMixin):
     notes = db.relationship('Note')
 
 # Many-to-Many relation between Employee and Asset
-# empAsset = db.Table("emp_asset",
-#                     db.Column("id", db.Integer, primary_key=True),
-#                     db.Column("Emp", db.Integer,
-#                               db.ForeignKey("Emp.id")),
-#                     db.Column("Asset", db.Integer, db.ForeignKey("Asset.asset_id")))
 
 
 class Emp(db.Model):
@@ -50,30 +60,14 @@ class Asset(db.Model):
     asset_name = db.Column(db.String(150))
     asset_status = db.Column(db.String(150))
     asset_detail = db.Column(db.String(150))
-    # emp_assets = db.relationship(
-    #     "EmpAsset", backref="asset")
 
 
 class EmpAsset(db.Model):
     __tablename__ = 'user_devices'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     emp_id = db.Column(db.Integer, db.ForeignKey("emp.id"), nullable=False)
     asset_id = db.Column(db.Integer, db.ForeignKey(
         "asset.asset_id"), nullable=False)
 
-    # emp = db.relationship('Emp', back_populates='emp_assets')
-    # asset = db.relationship('Asset', back_populates='followers')
 
 
-class Package(db.Model):
-    pkg_id = db.Column(db.String(150), primary_key=True)
-    ast_1 = db.Column(db.String(150))
-    ast_2 = db.Column(db.String(150))
-    ast_3 = db.Column(db.String(150))
-    ast_4 = db.Column(db.String(150))
-    ast_5 = db.Column(db.String(150))
-    ast_6 = db.Column(db.String(150))
-    ast_7 = db.Column(db.String(150))
-    ast_8 = db.Column(db.String(150))
-    ast_9 = db.Column(db.String(150))
-    ast_10 = db.Column(db.String(150))

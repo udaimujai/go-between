@@ -38,32 +38,32 @@
         <table BORDER="5" WIDTH="100%" CELLPADDING="4" CELLSPACING="3">
             <thead>
                 <tr>
-                    <th> ID </th>
-                    <th> Name </th>
-                    <th> First Name </th>
-                    <th>Last Name</th>
-                    <th>Department</th>
-                    <th>Join Date</th>
-                    <th>Address</th>
+                    <th style="text-align: center"> ID </th>
+                    <th style="text-align: center"> Name </th>
+                    <th style="text-align: center"> First Name </th>
+                    <th style="text-align: center">Last Name</th>
+                    <th style="text-align: center">Department</th>
+                    <th style="text-align: center">Join Date</th>
+                    <th style="text-align: center">Address</th>
                 </tr>
             </thead>
             {% if search_list is not none %}
             {% for b in search_list %}
             <tr>
-                <td>{{ b.id }}</td>
-                <td>{{ b.email }}</td>
-                <td>{{ b.first_name }}</td>
-                <td>{{ b.last_name }}</td>
-                <td>{{ b.department }}</td>
-                <td>{{ b.join_date }}</td>
-                <td>{{ b.address }}</td>
+                <td style="text-align: center">{{ b.id }}</td>
+                <td style="text-align: center">{{ b.email }}</td>
+                <td style="text-align: center">{{ b.first_name }}</td>
+                <td style="text-align: center">{{ b.last_name }}</td>
+                <td style="text-align: center">{{ b.department }}</td>
+                <td style="text-align: center">{{ b.join_date }}</td>
+                <td style="text-align: center">{{ b.address }}</td>
             </tr>
             {% endfor %}
         </table>
 
         {% else %}
         <tr>
-            <td>No Results</td>
+            <td style="text-align: center">No Results</td>
         </tr>
         {% endif %}
     </main>

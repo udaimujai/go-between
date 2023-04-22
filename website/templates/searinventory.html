@@ -2,21 +2,21 @@
 {%block content%}
 <thead>
     <tr>
-        <th>Asset Name</th>
-        <th>Asset ID</th>
+        <th style="text-align: center">Asset Name</th>
+        <th style="text-align: center">Asset ID</th>
     </tr>
 </thead>
 <tbody>
     {% if search_list is not none %}
     {% for b in search_list %}
     <tr>
-        <td>{{ b.asset_id }}</td>
-        <td>{{ b.asset_name }}</td>
+        <td style="text-align: center">{{ b.asset_id }}</td>
+        <td style="text-align: center">{{ b.asset_name }}</td>
     </tr>
     {% endfor %}
     {% else %}
     <tr>
-        <td>No hay sucursales registradas</td>
+        <td style="text-align: center">No hay sucursales registradas</td>
     </tr>
     {% endif %}
 </tbody>
