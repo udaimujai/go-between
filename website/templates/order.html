@@ -1,1 +1,107 @@
 {% extends "base.html" %}
+{%block content%}
+<div class="container">
+    <main id="right">
+        <form method="POST">
+            <div class="form-group">
+                <input type="id" class="form-control" id="emp_id" name="emp_id" placeholder="Employee ID"
+                    value="{{ order_id }}" />
+            </div>
+            <div class="form-group">
+                <input type="name" class="form-control" id="name" name="name" placeholder="User Name"
+                    value="{{empName}}" />
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email-Id"
+                    value="{{ emp_email }}" />
+            </div>
+            <div class="form-group">
+                <input type="dept" class="form-control" id="reason" name="reason" placeholder="Reason"
+                    value="{{ emp_reason}}" />
+            </div>
+            <div class="form-group">
+                <input type="package" class="form-control" id="package" name="package" placeholder="Package"
+                    value="{{ emp_package }}" />
+            </div>
+            <div class="form-group">
+                <input type="assets" class="form-control" id="assets" name="assets" placeholder="assets"
+                    value="{{ asset_id}}" />
+            </div>
+            <div class="form-group">
+                <input type="address" class="form-control" id="address" name="address" placeholder="Address"
+                    value="{{ emp_address }}" />
+            </div>
+            <div class="form-group">
+                <input type="deliveryType" class="form-control" id="deliveryType" name="deliveryType"
+                    placeholder="Delivery / Return" list="del-ret-list" value="{{ delivery_return }}" />
+                <datalist id="del-ret-list">
+                    <option value="Delivery">
+                    <option value="Return">
+                </datalist>
+            </div>
+            <div class="form-group">
+                <input type="status" class="form-control" id="status" name="status" placeholder="Status"
+                    list="status-list" value="{{ delivery_status }}" />
+                <datalist id="status-list">
+                    <option value="In-Progress">
+                    <option value="Completed">
+                    <option value="Cancelled">
+                </datalist>
+            </div>
+            <div class="form-group">
+                <input type="order-id" class="form-control" id="order-id" name="order-id"
+                    placeholder="Auto-Generated order-id use for search purpose" value="{{ order_id }}" />
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" value="{{ today}}"><br><br>
+            </div>
+
+            <button type="submit" class="button" name="action" value="search">Search</button>
+            <button type="submit" class="button" name="action" value="add">Add</button>
+            <button type="submit" class="button" name="action" value="delete">Delete</button>
+            <button type="submit" class="button" name="action" value="search-all">Search-All</button>
+            <button type="submit" class="button" name="action" value="search-order">Search-Order</button>
+            <button type="submit" class="button" name="action" value="update">Update</button>
+
+        </form>
+
+        <table BORDER="5" WIDTH="100%" CELLPADDING="4" CELLSPACING="3">
+            <thead>
+                <tr>
+                    <th style="text-align: center">Order ID </th>
+                    <th style="text-align: center"> Employee ID </th>
+                    <th style="text-align: center"> Employee Address </th>
+                    <th style="text-align: center">Email</th>
+                    <th style="text-align: center">Order Reason</th>
+                    <th style="text-align: center">Asset ID</th>
+                    <th style="text-align: center">Package ID</th>
+                    <th style="text-align: center">Delivery/Return</th>
+                    <th style="text-align: center">Status</th>
+
+                </tr>
+            </thead>
+            {% if search_list is not none %}
+            {% for b in search_list %}
+            <tr>
+                <td style="text-align: center">{{ b.id }}</td>
+                <td style="text-align: center">{{ b.emp_id }}</td>
+                <td style="text-align: center">{{ b.emp_address }}</td>
+                <td style="text-align: center">{{ b.emp_email }}</td>
+                <td style="text-align: center">{{ b.reason }}</td>
+                <td style="text-align: center">{{ b.asset_id }}</td>
+                <td style="text-align: center">{{ b.pkg_id }}</td>
+                <td style="text-align: center">{{ b.delivery_return }}</td>
+                <td style="text-align: center">{{ b.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% else %}
+        <tr>
+            <td style="text-align: center">No Results</td>
+        </tr>
+        {% endif %}
+    </main>
+</div>
+{%endblock%}

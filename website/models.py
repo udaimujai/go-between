@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from sqlalchemy import ForeignKey, Column, Integer, String
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 
 class Package(db.Model):
@@ -19,6 +20,7 @@ class PkgDevices(db.Model):
         "package.pkg_id"), nullable=False)
     asset_id = db.Column(db.Integer, db.ForeignKey(
         "asset.asset_id"), nullable=False)
+
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,6 +62,9 @@ class Asset(db.Model):
     asset_name = db.Column(db.String(150))
     asset_status = db.Column(db.String(150))
     asset_detail = db.Column(db.String(150))
+    asset_year_purchase = db.Column(db.String(150))
+    asset_warrenty = db.Column(db.String(150))
+    asset_serial_number = db.Column(db.String(400))
 
 
 class EmpAsset(db.Model):
@@ -70,4 +75,18 @@ class EmpAsset(db.Model):
         "asset.asset_id"), nullable=False)
 
 
-
+class Order(db.Model):
+    __tablename__ = 'order'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    emp_id = db.Column(db.Integer, db.ForeignKey("emp.id"), nullable=False)
+    emp_name = db.Column(db.String(400))
+    emp_address = db.Column(db.String(400))
+    emp_email = db.Column(db.String(150))
+    reason = db.Column(db.String(150))
+    asset_id = db.Column(db.Integer, db.ForeignKey(
+        "asset.asset_id"), nullable=False)
+    pkg_id = db.Column(db.Integer, db.ForeignKey(
+        "package.pkg_id"), nullable=True)
+    delivery_return = db.Column(db.String(100))
+    status = db.Column(db.String(100))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
