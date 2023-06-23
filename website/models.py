@@ -3,6 +3,23 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from sqlalchemy import ForeignKey, Column, Integer, String
 from sqlalchemy.orm import relationship
+from datetime import datetime
+
+
+class Package(db.Model):
+    __tablename__ = 'package'
+    pkg_id = db.Column(db.String(150), primary_key=True)
+    pkg_assets = db.relationship(
+        'Asset', secondary='pkg_devices', backref='packages')
+
+
+class PkgDevices(db.Model):
+    __tablename__ = 'pkg_devices'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    pkg_id = db.Column(db.Integer, db.ForeignKey(
+        "package.pkg_id"), nullable=False)
+    asset_id = db.Column(db.Integer, db.ForeignKey(
+        "asset.asset_id"), nullable=False)
 
 
 class Note(db.Model):
@@ -20,11 +37,6 @@ class User(db.Model, UserMixin):
     notes = db.relationship('Note')
 
 # Many-to-Many relation between Employee and Asset
-# empAsset = db.Table("emp_asset",
-#                     db.Column("id", db.Integer, primary_key=True),
-#                     db.Column("Emp", db.Integer,
-#                               db.ForeignKey("Emp.id")),
-#                     db.Column("Asset", db.Integer, db.ForeignKey("Asset.asset_id")))
 
 
 class Emp(db.Model):
@@ -50,30 +62,31 @@ class Asset(db.Model):
     asset_name = db.Column(db.String(150))
     asset_status = db.Column(db.String(150))
     asset_detail = db.Column(db.String(150))
-    # emp_assets = db.relationship(
-    #     "EmpAsset", backref="asset")
+    asset_year_purchase = db.Column(db.String(150))
+    asset_warrenty = db.Column(db.String(150))
+    asset_serial_number = db.Column(db.String(400))
 
 
 class EmpAsset(db.Model):
     __tablename__ = 'user_devices'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     emp_id = db.Column(db.Integer, db.ForeignKey("emp.id"), nullable=False)
     asset_id = db.Column(db.Integer, db.ForeignKey(
         "asset.asset_id"), nullable=False)
 
-    # emp = db.relationship('Emp', back_populates='emp_assets')
-    # asset = db.relationship('Asset', back_populates='followers')
 
-
-class Package(db.Model):
-    pkg_id = db.Column(db.String(150), primary_key=True)
-    ast_1 = db.Column(db.String(150))
-    ast_2 = db.Column(db.String(150))
-    ast_3 = db.Column(db.String(150))
-    ast_4 = db.Column(db.String(150))
-    ast_5 = db.Column(db.String(150))
-    ast_6 = db.Column(db.String(150))
-    ast_7 = db.Column(db.String(150))
-    ast_8 = db.Column(db.String(150))
-    ast_9 = db.Column(db.String(150))
-    ast_10 = db.Column(db.String(150))
+class Order(db.Model):
+    __tablename__ = 'order'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    emp_id = db.Column(db.Integer, db.ForeignKey("emp.id"), nullable=False)
+    emp_name = db.Column(db.String(400))
+    emp_address = db.Column(db.String(400))
+    emp_email = db.Column(db.String(150))
+    reason = db.Column(db.String(150))
+    asset_id = db.Column(db.Integer, db.ForeignKey(
+        "asset.asset_id"), nullable=False)
+    pkg_id = db.Column(db.Integer, db.ForeignKey(
+        "package.pkg_id"), nullable=True)
+    delivery_return = db.Column(db.String(100))
+    status = db.Column(db.String(100))
+    date = db.Column(db.DateTime, default=datetime.utcnow)

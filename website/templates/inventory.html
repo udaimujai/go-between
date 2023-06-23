@@ -41,34 +41,34 @@
             {% if Emp_name is not none %}
             <thead>
                 <tr>
-                    <th>Employee Name </th>
-                    <td>{{ Emp_name }}</td>
+                    <th style="text-align: center">Employee Name </th>
+                    <td style="text-align: center">{{ Emp_name }}</td>
                 </tr>
             </thead>
             {% endif %}
             <thead>
                 <tr>
-                    <th>Asset ID </th>
-                    <th>Asset Name </th>
-                    <th>Asset Status </th>
-                    <th>Asset Details </th>
+                    <th style="text-align: center">Asset ID </th>
+                    <th style="text-align: center">Asset Name </th>
+                    <th style="text-align: center">Asset Status </th>
+                    <th style="text-align: center">Asset Details </th>
 
                 </tr>
             </thead>
             {% if search_list is not none %}
             {% for b in search_list %}
             <tr>
-                <td>{{ b.asset_id }}</td>
-                <td>{{ b.asset_name }}</td>
-                <td>{{ b.asset_status }}</td>
-                <td>{{ b.asset_detail }}</td>
+                <td style="text-align: center">{{ b.asset_id }}</td>
+                <td style="text-align: center">{{ b.asset_name }}</td>
+                <td style="text-align: center">{{ b.asset_status }}</td>
+                <td style="text-align: center">{{ b.asset_detail }}</td>
             </tr>
             {% endfor %}
         </table>
 
         {% else %}
         <tr>
-            <td>No Results</td>
+            <td style="text-align: center">No Results</td>
         </tr>
         {% endif %}
     </main>
